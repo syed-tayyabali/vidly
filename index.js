@@ -3,6 +3,8 @@ mongoose.connect('mongodb://localhost/vidly')
     .then(() => console.log('connected to database'))
     .catch(err => console.error('failed to connet to database'));
 
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 const express = require('express');
 const app = express();
 
