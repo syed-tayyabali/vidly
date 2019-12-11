@@ -3,6 +3,7 @@ mongoose.connect('mongodb://localhost/vidly')
     .then(() => console.log('connected to database'))
     .catch(err => console.error('failed to connet to database'));
 
+const config = require('config');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const express = require('express');
@@ -14,6 +15,11 @@ const rentals = require('./routes/rentals');
 const movies = require('./routes/movies');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
+
+if (!config.get('jwtPrivateKey')) {
+    console.error('FATAL ERROR: jwtPrivateKey is not defined');
+    process.exit(1);
+}
 
 app.use(express.json());
 app.use('/api/genres', genres);
